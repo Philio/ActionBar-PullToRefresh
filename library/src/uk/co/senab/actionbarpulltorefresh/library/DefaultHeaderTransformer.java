@@ -50,9 +50,10 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     protected DefaultHeaderTransformer() {
         final int min = getMinimumApiLevel();
         if (Build.VERSION.SDK_INT < min) {
-            throw new IllegalStateException("This HeaderTransformer is designed to run on SDK "
-                    + min
-                    + "+. If using ActionBarSherlock or ActionBarCompat you should use the appropriate provided extra.");
+            throw new IllegalStateException(
+                    "This HeaderTransformer is designed to run on SDK "
+                            + min
+                            + "+. If using ActionBarSherlock or ActionBarCompat you should use the appropriate provided extra.");
         }
     }
 
@@ -80,7 +81,8 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
 
         Drawable abBg = getActionBarBackground(context);
         if (abBg != null) {
-            // If we do not have a opaque background we just display a solid solid behind it
+            // If we do not have a opaque background we just display a solid
+            // solid behind it
             if (abBg.getOpacity() != PixelFormat.OPAQUE) {
                 View view = headerView.findViewById(R.id.ptr_text_opaque_bg);
                 if (view != null) {
@@ -88,7 +90,7 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
                 }
             }
 
-            mHeaderTextView.setBackgroundDrawable(abBg);
+            // mHeaderTextView.setBackgroundDrawable(abBg);
         }
 
         final int titleTextStyle = getActionBarTitleStyle(context);
@@ -162,12 +164,13 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     }
 
     /**
-     * Set color to apply to the progress bar. Automatically enables usage of the custom color. Use
-     * {@link #setProgressBarColorEnabled(boolean)} to disable and re-enable the custom color usage.
+     * Set color to apply to the progress bar. Automatically enables usage of
+     * the custom color. Use {@link #setProgressBarColorEnabled(boolean)} to
+     * disable and re-enable the custom color usage.
      * <p/>
-     * The best way to apply a color is to load the color from resources: {@code
-     * setProgressBarColor(getResources().getColor(R.color.your_color_name))}.
-     *
+     * The best way to apply a color is to load the color from resources:
+     * {@code setProgressBarColor(getResources().getColor(R.color.your_color_name))}.
+     * 
      * @param color The color to use.
      */
     public void setProgressBarColor(int color) {
@@ -176,18 +179,18 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     }
 
     /**
-     * Enable or disable the use of a custom progress bar color. You can set what color to use with
-     * {@link #setProgressBarColor(int)}, which also automatically enables custom color usage.
+     * Enable or disable the use of a custom progress bar color. You can set
+     * what color to use with {@link #setProgressBarColor(int)}, which also
+     * automatically enables custom color usage.
      */
     public void setProgressBarColorEnabled(boolean enabled) {
         mUseCustomProgressColor = enabled;
         applyProgressBarColor();
     }
 
-
     /**
      * Set Text to show to prompt the user is pull (or keep pulling).
-     *
+     * 
      * @param pullText - Text to display.
      */
     public void setPullText(CharSequence pullText) {
@@ -198,8 +201,9 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     }
 
     /**
-     * Set Text to show to tell the user that a refresh is currently in progress.
-     *
+     * Set Text to show to tell the user that a refresh is currently in
+     * progress.
+     * 
      * @param refreshingText - Text to display.
      */
     public void setRefreshingText(CharSequence refreshingText) {
@@ -208,7 +212,7 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
 
     /**
      * Set Text to show to tell the user has scrolled enough to refresh.
-     *
+     * 
      * @param releaseText - Text to display.
      */
     public void setReleaseText(CharSequence releaseText) {
@@ -230,7 +234,9 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     }
 
     protected Drawable getActionBarBackground(Context context) {
-        int[] android_styleable_ActionBar = {android.R.attr.background};
+        int[] android_styleable_ActionBar = {
+                android.R.attr.background
+        };
 
         // Need to get resource id of style pointed to from actionBarStyle
         TypedValue outValue = new TypedValue();
@@ -239,7 +245,8 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
         TypedArray abStyle = context.getTheme().obtainStyledAttributes(outValue.resourceId,
                 android_styleable_ActionBar);
         try {
-            // background is the first attr in the array above so it's index is 0.
+            // background is the first attr in the array above so it's index is
+            // 0.
             return abStyle.getDrawable(0);
         } finally {
             abStyle.recycle();
@@ -247,7 +254,9 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     }
 
     protected int getActionBarSize(Context context) {
-        int[] attrs = {android.R.attr.actionBarSize};
+        int[] attrs = {
+                android.R.attr.actionBarSize
+        };
         TypedArray values = context.getTheme().obtainStyledAttributes(attrs);
         try {
             return values.getDimensionPixelSize(0, 0);
@@ -257,7 +266,9 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
     }
 
     protected int getActionBarTitleStyle(Context context) {
-        int[] android_styleable_ActionBar = {android.R.attr.titleTextStyle};
+        int[] android_styleable_ActionBar = {
+                android.R.attr.titleTextStyle
+        };
 
         // Need to get resource id of style pointed to from actionBarStyle
         TypedValue outValue = new TypedValue();
@@ -266,7 +277,8 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
         TypedArray abStyle = context.getTheme().obtainStyledAttributes(outValue.resourceId,
                 android_styleable_ActionBar);
         try {
-            // titleTextStyle is the first attr in the array above so it's index is 0.
+            // titleTextStyle is the first attr in the array above so it's index
+            // is 0.
             return abStyle.getResourceId(0, 0);
         } finally {
             abStyle.recycle();
