@@ -92,7 +92,7 @@ public class DefaultHeaderTransformer extends PullToRefreshAttacher.HeaderTransf
                 }
             }
 
-            // mHeaderTextView.setBackgroundDrawable(abBg);
+            mHeaderTextView.setBackgroundDrawable(abBg);
         }
 
         final int titleTextStyle = getActionBarTitleStyle(context);
