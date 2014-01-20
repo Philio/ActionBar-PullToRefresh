@@ -19,15 +19,15 @@ package uk.co.senab.actionbarpulltorefresh.library.viewdelegates;
 import android.view.View;
 import android.widget.ScrollView;
 
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-
 /**
  * FIXME
  */
-public class ScrollYDelegate extends PullToRefreshAttacher.ViewDelegate {
+public class ScrollYDelegate implements ViewDelegate {
+
+    public static final Class[] SUPPORTED_VIEW_CLASSES =  { ScrollView.class };
 
     @Override
-    public boolean isScrolledToTop(View view) {
+    public boolean isReadyForPull(View view, float x, float y) {
         return view.getScrollY() <= 0;
     }
 }

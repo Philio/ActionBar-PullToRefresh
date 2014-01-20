@@ -21,47 +21,30 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.AbcDefaultHeaderTransformer;
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshAttacher;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * This sample shows how to use ActionBar-PullToRefresh with a
  * {@link android.widget.ScrollView ScrollView}.
  */
 public class ScrollViewActivity extends ActionBarActivity
-        implements PullToRefreshAttacher.OnRefreshListener {
+        implements OnRefreshListener {
 
-    private PullToRefreshAttacher mPullToRefreshAttacher;
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrollview);
 
-        // Create new PullToRefreshAttacher
-        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
-
-        // Retrieve the PullToRefreshLayout from the content view
-        PullToRefreshLayout ptrLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
-
-        // Give the PullToRefreshAttacher to the PullToRefreshLayout, along with the refresh
-        // listener (this).
-        ptrLayout.setPullToRefreshAttacher(mPullToRefreshAttacher, this);
-
-        // As we haven't set an explicit HeaderTransformer, we can safely cast the result of
-        // getHeaderTransformer() to DefaultHeaderTransformer
-        AbcDefaultHeaderTransformer ht = (AbcDefaultHeaderTransformer) mPullToRefreshAttacher
-                .getHeaderTransformer();
-
-        // As we're using a DefaultHeaderTransformer we can change the text which is displayed.
-        // You should load these values from localised resources, but we'll just use static strings.
-        ht.setPullText("Swipe Me!!!");
-        ht.setRefreshingText("Refreshing :)");
-
-        // DefaultHeaderTransformer allows you to change the color of the progress bar. Here
-        // we set it to a dark holo green, loaded from our resources
-        ht.setProgressBarColor(getResources().getColor(R.color.holo_dark_green));
+        // Now find the PullToRefreshLayout and set it up
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
+        ActionBarPullToRefresh.from(this)
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(mPullToRefreshLayout);
     }
 
     @Override
@@ -85,8 +68,8 @@ public class ScrollViewActivity extends ActionBarActivity
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
 
-                // Notify PullToRefreshAttacher that the refresh has finished
-                mPullToRefreshAttacher.setRefreshComplete();
+                // Notify PullToRefreshLayout that the refresh has finished
+                mPullToRefreshLayout.setRefreshComplete();
             }
         }.execute();
     }
